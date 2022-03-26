@@ -1,8 +1,16 @@
+library(tidyverse)
+
 
 de_macron <- function(x){gsub("M.ori", "Maori", x)}
 
+# Download the poll results
+sapply(
+    Sys.glob('prep/polls/download_polls_*.R'),
+    source,
+    .GlobalEnv
+)
 
-polls <- plyr::rbind.fill(polls2005, polls2008, polls2011, polls2014) 
+polls <- plyr::rbind.fill(polls2005, polls2008, polls2011, polls2014, polls2017, polls2020, polls2023)
 names(polls) <- de_macron(names(polls))
 
 polls <- polls %>%
