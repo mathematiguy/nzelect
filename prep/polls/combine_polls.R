@@ -22,7 +22,7 @@ polls <- polls %>%
            VotingIntention = as.numeric(VotingIntention) / 100) %>%
     # clean up party names
     mutate(Party = ifelse(grepl("^Prog", Party), "Progressive", Party)) %>%
-    
+
     # clean up pollster names:
     mutate(Poll = gsub(".*[Ee]lection result", "Election result", Poll),
            Poll = gsub("Herald.Digi[Pp]oll", "Herald-Digipoll", Poll)) %>%
@@ -73,7 +73,7 @@ polls <- polls %>%
     filter(Pollster != "Election result") %>%
     rbind(elections) %>%
     arrange(EndDate, Pollster, Party)
-    
+
 # add in election years
 polls <- polls %>%
     mutate(ElectionYear = ifelse(MidDate <= "2020-10-23", 2020, NA),
@@ -100,8 +100,8 @@ test_that("Right number of parties", {
 # test all enddate, startdate, MidDate valid
 test_that("Dates Valid", {
     expect_equal(sum(is.na(polls$StartDate)), 0)
-    expect_equal(sum(is.na(polls$EndDate)), 0)    
-    expect_equal(sum(is.na(polls$MidDate)), 0)    
+    expect_equal(sum(is.na(polls$EndDate)), 0)
+    expect_equal(sum(is.na(polls$MidDate)), 0)
 })
 # polls %>% filter(is.na(StartDate))
 
@@ -138,7 +138,7 @@ polls %>%
     scale_x_date("") +
     facet_wrap(~Party, scales = "free_y") +
     geom_vline(xintercept = as.numeric(election_dates$MidDate), colour = "grey80") +
-    theme_grey() 
+    theme_grey()
 
 
 print(polls %>%
@@ -153,4 +153,4 @@ print(polls %>%
     scale_y_continuous("Voting intention", label = percent) +
     labs(x = "") +
     ggtitle("Voting intention for the Green Party")
-)
+    )
