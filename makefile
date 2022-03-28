@@ -7,6 +7,9 @@ GID ?= kaimahi
 DOCKER_ARGS ?=
 GIT_TAG ?= $(shell git log --oneline | head -n1 | awk '{print $$1}')
 
+all:
+	$(RUN) Rscript build.R
+
 r_shell: DOCKER_ARGS= -dit --rm -e DISPLAY=$$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix:ro --name="rdev"
 r_shell:
 	$(RUN) R
